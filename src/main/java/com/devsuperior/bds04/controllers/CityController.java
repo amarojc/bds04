@@ -1,12 +1,18 @@
 package com.devsuperior.bds04.controllers;
 
+import java.net.URI;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devsuperior.bds04.dto.CityDTO;
 import com.devsuperior.bds04.services.CityService;
@@ -21,5 +27,17 @@ public class CityController {
 	@GetMapping
 	public ResponseEntity<List<CityDTO>> findAllCities(){
 		return ResponseEntity.ok().body(cityService.findAllCities());
+	}
+	
+	@PostMapping
+	public ResponseEntity<CityDTO> insertCity(@RequestBody @Valid CityDTO cityDTO){
+		cityDTO = cityService.insertCity(cityDTO);
+		
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(cityDTO.getId()).toUri();
+		
+		return ResponseEntity.created(uri).body(cityDTO);
 	}
 }

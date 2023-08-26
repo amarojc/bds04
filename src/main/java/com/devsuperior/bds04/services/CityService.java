@@ -24,4 +24,18 @@ public class CityService {
 		return cities.stream().map(x -> new CityDTO(x)).collect(Collectors.toList());
 		
 	}
+	
+	@Transactional
+	public CityDTO insertCity(CityDTO cityDTO) {
+		City city = new City();
+		copyDtoToEntity(cityDTO, city);
+		city = cityRepository.save(city);
+		
+		return new CityDTO(city);
+	}
+	
+	
+	private void copyDtoToEntity(CityDTO cityDTO, City city) {
+		city.setName(cityDTO.getName());
+	}
 }
