@@ -29,7 +29,7 @@ public class EventService {
 	@Transactional
 	public EventDTO insertEvent(EventDTO eventDTO) {
 		Event event = new Event();
-		event.setDate(LocalDate.now());
+		event.setDate(LocalDate.now().plusMonths(1L));
 		copyEventDtoToEventEntity(eventDTO, event);
 		event = eventRepository.save(event);
 		

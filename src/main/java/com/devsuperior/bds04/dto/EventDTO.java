@@ -3,6 +3,8 @@ package com.devsuperior.bds04.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.Valid;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -13,13 +15,14 @@ public class EventDTO implements Serializable {
 	
 	private Long id;
 	
-	@NotBlank(message = "Nome do evento não pode ficar em branco!")
+	@NotBlank(message = "Campo requerido")
 	private String name;
 	
+	@FutureOrPresent(message = "A data do evento não pode ser passada")
 	private LocalDate date;
 	private String url;
 	
-	@NotNull(message = "Informe a cidade!")
+	@NotNull(message = "Campo requerido")
 	private Long cityId;
 	
 	public EventDTO() {
